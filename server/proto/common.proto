@@ -1,0 +1,66 @@
+syntax = "proto3";
+option csharp_namespace = "language_csharp";
+
+//Represents an empty message, for RPC calls that don't take any arguments
+message Empty {}
+
+//Flags that represent code processing capabilities
+enum Capabilities
+{
+	NONE          = 0x00;  //Sentinel value (unused)
+	GENERATE_ASTS = 0x01;  //Supports generation of Abstract Syntax Trees
+	IO_MATCHING   = 0x02;  //Supports I/O matching
+	UNIT_TESTING  = 0x04;  //Supports unit testing
+}
+
+//Represents the set of processing capabilities supported for an individual programming language
+message LanguageCapabilities
+{
+	string language = 1;      //The name of the programming language
+	uint32 capabilities = 2;  //A bitfield containing flags for each supported processing capability (see the `Capabilities` enum for supported flags)
+}
+
+//Represents the result for a single test case
+message TestCaseResult
+{
+	string output = 1;   //A string representation of the return value or thrown exception
+	string type = 2;     //The type of the returned value or thrown exception
+	bool exception = 3;  //Whether an exception was thrown or not
+}
+
+//Represents a single test case for a unit test
+message TestCase
+{
+	repeated string inputs = 1;   //The input parameters for the test case
+	string setup = 2;             //The setup code to be run before the test case (if any)
+	string teardown = 3;          //The teardown code to be run after the test case (if any)
+	TestCaseResult expected = 4;  //The expected output of the test case
+}
+
+//Represents a unit test and its set of test cases
+message UnitTest
+{
+	string invocation = 1;        //The method which will be called once for each test case
+	string setup = 2;             //The setup code to be run before the unit test (if any)
+	string teardown = 3;          //The teardown code to be run after the unit test (if any)
+	repeated TestCase cases = 4;  //The list of test cases
+}
+
+//Represents the result vector for a unit test
+message UnitTestResultVector {
+	repeated TestCaseResult result = 1;  //The list of test case results
+}
+
+//Represents the request data for the GenerateAst() RPC call
+message GenerateAstRequest
+{
+	string language = 1;  //The name of the programming language in which the source code is written
+	string source = 2;    //The source code for which the Abstract Syntax Tree should be generated
+}
+
+//Represents the response data for the GenerateAst() RPC call
+message GenerateAstResponse
+{
+	string error = 1;  //Contains the error details if an error occurred, or an empty string upon success
+	string ast = 2;    //The generated Abstract Syntax Tree, in JSON format (the structure of the tree is language-specific)
+}

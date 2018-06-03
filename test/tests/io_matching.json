@@ -1,0 +1,123 @@
+{
+	"cases": [
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "python",
+				"source": "code/io_stuff.py",
+				"invocation": "ioStuff()",
+				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+				"combine": false,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "python",
+				"source": "code/io_stuff.py",
+				"invocation": "ioStuff()",
+				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+				"combine": true,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "java",
+				"source": "code/io_stuff.java",
+				"invocation": "IOStuff.ioStuff();",
+				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+				"combine": false,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "java",
+				"source": "code/io_stuff.java",
+				"invocation": "IOStuff.ioStuff();",
+				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+				"combine": true,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "cxx",
+				"source": "code/io_stuff.cpp",
+				"invocation": "ioStuff();",
+				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+				"combine": false,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "csharp",
+				"source": "code/io_stuff.cs",
+				"invocation": "IOStuff.ioStuff();",
+				"stdin": "MY STDIN DATA WITH \"\"DOUBLE QUOTES\"\"",
+				"combine": false,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		},
+		{
+			"rpc": "PerformIOMatch",
+			"input": {
+				"language": "javascript",
+				"source": "code/io_stuff.js",
+				"invocation": "ioStuff();",
+				"stdin": "MY STDIN DATA WITH \"\"DOUBLE QUOTES\"\" AND ${INTERPOLATION} AND\nNEWLINES",
+				"combine": false,
+				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdErr": []
+			},
+			"expected": {
+				"error": "",
+				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdErr": []
+			}
+		}
+	]
+}

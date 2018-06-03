@@ -1,0 +1,12 @@
+﻿namespace CodegenOutput
+{
+    //$$__PREFIX_CODE__$$
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //$$__MAIN_CODE__$$
+        }
+    }
+}

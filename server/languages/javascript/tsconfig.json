@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "es2017",
+		"module": "CommonJS",
+		"strict": true,
+		"strictNullChecks": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"moduleResolution": "Node",
+		"rootDir": "./source/ts",
+		"outDir": "./source/js"
+	}
+}

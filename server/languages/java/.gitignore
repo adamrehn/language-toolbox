@@ -1,0 +1,8 @@
+src/main/proto
+.gradle-home
+.classpath
+.settings
+.project
+.gradle
+build
+bin

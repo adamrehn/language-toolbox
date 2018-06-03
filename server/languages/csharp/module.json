@@ -1,0 +1,3 @@
+{
+	"command": ["dotnet", "./bin/Release/netcoreapp2.0/publish/language-csharp.dll", "${PORT}", "./template"]
+}

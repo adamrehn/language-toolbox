@@ -1,0 +1,264 @@
+{
+	"cases": [
+		{
+			"rpc": "PerformUnitTests",
+			"input": {
+				"language": "python",
+				"source": "code/passthrough.py",
+				"tests": [
+					{
+						"invocation": "passthrough",
+						"setup": "# unit test setup code",
+						"teardown": "# unit test teardown code",
+						"cases": [
+							{
+								"setup": "# test case setup code",
+								"teardown": "# test case teardown code",
+								"inputs": ["1"],
+								"expected": { "output": "1", "type": "int", "exception": false }
+							},
+							{
+								"setup": "# test case setup code",
+								"teardown": "# test case teardown code",
+								"inputs": ["2"],
+								"expected": { "output": "2", "type": "int", "exception": false }
+							},
+							{
+								"setup": "# test case setup code",
+								"teardown": "# test case teardown code",
+								"inputs": ["3"],
+								"expected": { "output": "3", "type": "int", "exception": false }
+							},
+							{
+								"setup": "# test case setup code",
+								"teardown": "# test case teardown code",
+								"inputs": ["4"],
+								"expected": { "output": "4", "type": "int", "exception": false }
+							}
+						]
+					}
+				],
+				"timeout": 0
+			},
+			"expected": {
+				"passed": 4,
+				"results": [{"result": [
+					{ "output": "1", "type": "int", "exception": false },
+					{ "output": "2", "type": "int", "exception": false },
+					{ "output": "3", "type": "int", "exception": false },
+					{ "output": "4", "type": "int", "exception": false }
+				]}],
+				"error": "",
+				"failed": 0
+			}
+		},
+		{
+			"rpc": "PerformUnitTests",
+			"input": {
+				"language": "java",
+				"source": "code/passthrough.java",
+				"tests": [
+					{
+						"invocation": "new Passthrough().passthrough",
+						"setup": "// unit test setup code",
+						"teardown": "// unit test teardown code",
+						"cases": [
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["1"],
+								"expected": { "output": "1", "type": "java.lang.Integer", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["2"],
+								"expected": { "output": "2", "type": "java.lang.Integer", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["3"],
+								"expected": { "output": "3", "type": "java.lang.Integer", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["4"],
+								"expected": { "output": "4", "type": "java.lang.Integer", "exception": false }
+							}
+						]
+					}
+				],
+				"timeout": 0
+			},
+			"expected": {
+				"passed": 4,
+				"results": [{"result": [
+					{ "output": "1", "type": "java.lang.Integer", "exception": false },
+					{ "output": "2", "type": "java.lang.Integer", "exception": false },
+					{ "output": "3", "type": "java.lang.Integer", "exception": false },
+					{ "output": "4", "type": "java.lang.Integer", "exception": false }
+				]}],
+				"error": "",
+				"failed": 0
+			}
+		},
+		{
+			"rpc": "PerformUnitTests",
+			"input": {
+				"language": "javascript",
+				"source": "code/passthrough.js",
+				"tests": [
+					{
+						"invocation": "passthrough",
+						"setup": "// unit test setup code",
+						"teardown": "// unit test teardown code",
+						"cases": [
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["1"],
+								"expected": { "output": "1", "type": "Number", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["2"],
+								"expected": { "output": "2", "type": "Number", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["3"],
+								"expected": { "output": "3", "type": "Number", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["4"],
+								"expected": { "output": "4", "type": "Number", "exception": false }
+							}
+						]
+					}
+				],
+				"timeout": 0
+			},
+			"expected": {
+				"passed": 4,
+				"results": [{"result": [
+					{ "output": "1", "type": "Number", "exception": false },
+					{ "output": "2", "type": "Number", "exception": false },
+					{ "output": "3", "type": "Number", "exception": false },
+					{ "output": "4", "type": "Number", "exception": false }
+				]}],
+				"error": "",
+				"failed": 0
+			}
+		},
+		{
+			"rpc": "PerformUnitTests",
+			"input": {
+				"language": "cxx",
+				"source": "code/passthrough.cpp",
+				"tests": [
+					{
+						"invocation": "passthrough",
+						"setup": "// unit test setup code",
+						"teardown": "// unit test teardown code",
+						"cases": [
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["1"],
+								"expected": { "output": "1", "type": "int", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["2"],
+								"expected": { "output": "2", "type": "int", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["3"],
+								"expected": { "output": "3", "type": "int", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["4"],
+								"expected": { "output": "4", "type": "int", "exception": false }
+							}
+						]
+					}
+				],
+				"timeout": 0
+			},
+			"expected": {
+				"passed": 4,
+				"results": [{"result": [
+					{ "output": "1", "type": "int", "exception": false },
+					{ "output": "2", "type": "int", "exception": false },
+					{ "output": "3", "type": "int", "exception": false },
+					{ "output": "4", "type": "int", "exception": false }
+				]}],
+				"error": "",
+				"failed": 0
+			}
+		},
+		{
+			"rpc": "PerformUnitTests",
+			"input": {
+				"language": "csharp",
+				"source": "code/passthrough.cs",
+				"tests": [
+					{
+						"invocation": "new Passthrough().passthrough",
+						"setup": "// unit test setup code",
+						"teardown": "// unit test teardown code",
+						"cases": [
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["1"],
+								"expected": { "output": "1", "type": "Int32", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["2"],
+								"expected": { "output": "2", "type": "Int32", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["3"],
+								"expected": { "output": "3", "type": "Int32", "exception": false }
+							},
+							{
+								"setup": "// test case setup code",
+								"teardown": "// test case teardown code",
+								"inputs": ["4"],
+								"expected": { "output": "4", "type": "Int32", "exception": false }
+							}
+						]
+					}
+				],
+				"timeout": 0
+			},
+			"expected": {
+				"passed": 4,
+				"results": [{"result": [
+					{ "output": "1", "type": "Int32", "exception": false },
+					{ "output": "2", "type": "Int32", "exception": false },
+					{ "output": "3", "type": "Int32", "exception": false },
+					{ "output": "4", "type": "Int32", "exception": false }
+				]}],
+				"error": "",
+				"failed": 0
+			}
+		}
+	]
+}

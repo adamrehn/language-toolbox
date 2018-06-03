@@ -1,0 +1,45 @@
+{
+	"name": "code-server-stuff",
+	"description": "Code Server Stuff",
+	"homepage": "https://github.com/adamrehn/language-toolbox/server/core",
+	"main": "source/js/main.js",
+	"version": "1.0.0",
+	"files": [
+		"source/js"
+	],
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"author": {
+		"name": "Adam Rehn",
+		"email": "adam.rehn@my.jcu.edu.au"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adamrehn/language-toolbox.git"
+	},
+	"dependencies": {
+		"glob": "*",
+		"grpc": "*",
+		"jsonpath": "*",
+		"protobufjs": "6.8.4",
+		"sort-keys": "*",
+		"util.promisify": "*",
+		"winston": "*"
+	},
+	"devDependencies": {
+		"rimraf": "*",
+		"tslint": "*",
+		"typescript": "*",
+		"@types/jsonpath": "*",
+		"@types/glob": "*",
+		"@types/node": "*",
+		"@types/winston": "*"
+	},
+	"scripts": {
+		"build": "tsc",
+		"clean": "rimraf ./node_modules ./source/js",
+		"lint": "tslint --project ./tsconfig.json --type-check --format verbose",
+		"start": "npm run build && node ."
+	}
+}

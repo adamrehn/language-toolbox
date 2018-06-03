@@ -1,0 +1,84 @@
+syntax = "proto3";
+option csharp_namespace = "language_csharp";
+import "common.proto";
+
+//Represents the response data for the ListCapabilities() RPC call
+message ListCapabilitiesResponse {
+	repeated LanguageCapabilities capabilities = 1;  //The list of programming languages and associated processing capabilities
+}
+
+//Represents the request data for the PerformAstMatch() RPC call
+message PerformAstMatchRequest
+{
+	string language = 1;           //The name of the programming language in which the source code is written
+	string source = 2;             //The source code for which the Abstract Syntax Tree should be generated
+	repeated string patterns = 3;  //The list of JSONPath expressions to match against the generated Abstract Syntax Tree
+}
+
+//Represents the response data for the PerformAstMatch() RPC call
+message PerformAstMatchResponse
+{
+	string error = 1;             //Contains the error details if an error occurred, or an empty string upon success
+	string ast = 2;               //The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching
+	repeated string matches = 3;  //The list of matches for each supplied pattern, in JSON format
+}
+
+//Represents the request data for the PerformIOMatch() RPC call
+message PerformIOMatchRequest
+{
+	string language = 1;                 //The name of the programming language in which the source code is written
+	string source = 2;                   //The source code upon which the code in the `invocation` parameter depends
+	string invocation = 3;               //The source code to be executed and whose output will be captured
+	string stdin = 4;                    //The string (including any newlines) to be used as the stdin data
+	bool combine = 5;                    //Whether the stdout and stderr streams should be combined
+	repeated string patternsStdOut = 6;  //The list of regular expression patterns to match against the stdout data
+	repeated string patternsStdErr = 7;  //The list of regular expression patterns to match against the stderr data
+	uint32 timeout = 8;                  //Execution time limit (leave blank to use default timeout)
+}
+
+//Represents the response data for the PerformIOMatch() RPC call
+message PerformIOMatchResponse
+{
+	string error = 1;                   //Contains the error details if an error occurred, or an empty string upon success
+	bytes stdout = 2;                   //The captured stdout data (interleaved with the captured stderr data if `combine` was true)
+	bytes stderr = 3;                   //The captured stderr data (empty if `combine` was true)
+	repeated string matchesStdOut = 4;  //The list of matches for the patterns that we applied to the stdout data
+	repeated string matchesStdErr = 5;  //The list of matches for the patterns that we applied to the stderr data
+}
+
+//Represents the request data for the PerformUnitTests() RPC call
+message PerformUnitTestsRequest
+{
+	string language = 1;          //The name of the programming language in which the source code is written
+	string source = 2;            //The source code that the unit tests are designed to validate
+	repeated UnitTest tests = 3;  //The list of unit tests to be run
+	uint32 timeout = 4;           //Execution time limit (leave blank to use default timeout)
+}
+
+//Represents the response data for the PerformUnitTests() RPC call
+message PerformUnitTestsResponse
+{
+	string error = 1;                           //Contains the error details if an error occurred, or an empty string upon success
+	uint32 passed = 2;                          //The total number of test cases that passed
+	uint32 failed = 3;                          //The total number of test cases that failed
+	repeated UnitTestResultVector results = 4;  //The list of results for each unit test
+}
+
+//This is the public interface exposed by the Language Toolbox server for use by client applications.
+service Server
+{
+	//Lists the programming languages that the server supports, as well as which processing features are supported for each language.
+	rpc ListCapabilities (Empty) returns (ListCapabilitiesResponse) {}
+	
+	//Generates the Abstract Syntax Tree (in JSON format) for the supplied source code.
+	rpc GenerateAst (GenerateAstRequest) returns (GenerateAstResponse) {}
+	
+	//Generates the Abstract Syntax Tree (in JSON format) for the supplied source code and matches it against the supplied JSONPath patterns.
+	rpc PerformAstMatch (PerformAstMatchRequest) returns (PerformAstMatchResponse) {}
+	
+	//Runs the supplied source code with the specified input data and matches the output against the specified regular expression patterns.
+	rpc PerformIOMatch (PerformIOMatchRequest) returns (PerformIOMatchResponse) {}
+	
+	//Runs the supplied unit tests against the supplied source code and returns the test results.
+	rpc PerformUnitTests (PerformUnitTestsRequest) returns (PerformUnitTestsResponse) {}
+}

@@ -1,0 +1,54 @@
+{
+	"cases": [
+		{
+			"rpc": "GenerateAst",
+			"input": {
+				"language": "python",
+				"source": "code/passthrough.py"
+			},
+			"expected": {
+				"error": ""
+			}
+		},
+		{
+			"rpc": "GenerateAst",
+			"input": {
+				"language": "java",
+				"source": "code/passthrough.java"
+			},
+			"expected": {
+				"error": ""
+			}
+		},
+		{
+			"rpc": "GenerateAst",
+			"input": {
+				"language": "javascript",
+				"source": "code/passthrough.js"
+			},
+			"expected": {
+				"error": ""
+			}
+		},
+		{
+			"rpc": "GenerateAst",
+			"input": {
+				"language": "cxx",
+				"source": "code/language_constructs.cpp"
+			},
+			"expected": {
+				"error": ""
+			}
+		},
+		{
+			"rpc": "GenerateAst",
+			"input": {
+				"language": "csharp",
+				"source": "code/passthrough.cs"
+			},
+			"expected": {
+				"error": ""
+			}
+		}
+	]
+}

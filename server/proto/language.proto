@@ -1,0 +1,80 @@
+syntax = "proto3";
+option csharp_namespace = "language_csharp";
+import "common.proto";
+
+//The message type that module.json files must conform to
+message ModuleDescriptor
+{
+	/*
+	* The command to run the gRPC server process for this language module.
+	* This command will be executed with the language module's directory as the cwd.
+	*
+	* One of the strings in the array must be "${PORT}", which will be replaced with an auto-generated port number at runtime.
+	* The server core expects the language module's gRPC server to listen on this port number.
+	*/
+	repeated string command = 1;
+}
+
+//Represents the details required to run the Docker sandbox image for a module
+message SandboxDetails
+{
+	string image = 1;             //The name of the Docker image to be used for sandboxed execution
+	repeated string command = 2;  //The command to be run inside each sandbox container instance, which accepts codegen output as its stdin data
+}
+
+//Represents the input data to be passed to a Docker sandbox image, produced by a codegen RPC
+message SandboxInput {
+	bytes data = 1;  //The raw output from a codegen RPC response
+}
+
+//Represents the request data for the CodegenIOCapture() codegen RPC
+message CodegenIOCaptureRequest
+{
+	string source = 1;      //The source code upon which the code in the `invocation` parameter depends
+	string invocation = 2;  //The source code to be executed and whose output will be captured
+	string stdin = 3;       //The string (including any newlines) to be used as the stdin data
+}
+
+//Represents the response data for the CodegenIOCapture() codegen RPC
+message CodegenIOCaptureResponse
+{
+	string error = 1;  //Contains the error details if an error occurred, or an empty string upon success
+	bytes data = 2;    //The codegen output, ready to be passed to an instance of the language module's Docker sandbox container for execution
+}
+
+//Represents the request data for the CodegenUnitTests() codegen RPC
+message CodegenUnitTestsRequest
+{
+	string source = 1;            //The source code that the unit tests are designed to validate
+	repeated UnitTest tests = 2;  //The list of unit tests to be run
+}
+
+//Represents the response data for the CodegenUnitTests() codegen RPC
+message CodegenUnitTestsResponse
+{
+	string error = 1;  //Contains the error details if an error occurred, or an empty string upon success
+	bytes data = 2;    //The codegen output, ready to be passed to an instance of the language module's Docker sandbox container for execution
+}
+
+/*
+* This is the private interface implemented by each individual language module for communication with the Language Toolbox server core.
+* 
+* **This service is only used internally and is not exposed to client applications. Client application developers should refer to the `Server` service.**
+*/
+service LanguageModule
+{
+	//Specifies the programming language that this module is for, as well as which processing features are supported.
+	rpc GetCapabilities (Empty) returns (LanguageCapabilities) {}
+	
+	//Specifies the details for running the Docker sandbox image for this module.
+	rpc GetSandboxDetails (Empty) returns (SandboxDetails) {}
+	
+	//Generates the Abstract Syntax Tree for the supplied source code (if supported.)
+	rpc GenerateAst (GenerateAstRequest) returns (GenerateAstResponse) {}
+	
+	//Performs codegen and returns the sandbox input data required to run the supplied source code with the specified input data (if supported.)
+	rpc CodegenIOCapture (CodegenIOCaptureRequest) returns (CodegenIOCaptureResponse) {}
+	
+	//Performs codegen and returns the sandbox input data required to run the specified unit tests on the supplied source code (if supported.)
+	rpc CodegenUnitTests (CodegenUnitTestsRequest) returns (CodegenUnitTestsResponse) {}
+}

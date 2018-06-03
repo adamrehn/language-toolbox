@@ -1,0 +1,4 @@
+colorama
+grpcio
+grpcio-tools
+termcolor
