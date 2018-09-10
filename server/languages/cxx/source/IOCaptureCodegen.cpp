@@ -17,7 +17,7 @@ string IOCaptureCodegen::performCodegen(CodegenManager* codegen, const string& s
 #include "redirect.h"
 )";
 	
-	//Sanitise the stdin data to ensure our raw string literal delimeter does not appear within in
+	//Sanitise the stdin data to ensure our raw string literal delimeter does not appear within it
 	string rawDelim = "_______d_e_l_i_m";
 	string sanitised = Utility::strReplace(rawDelim, "", stdinData);
 	

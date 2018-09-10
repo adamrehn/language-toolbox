@@ -245,7 +245,7 @@ export class LanguageModule extends SubprocessManagerBase
 				throw new Error(codegenResult.error);
 			}
 			
-			//Attempt to execute the unit tests in our sandbox container
+			//Attempt to execute the generated code in our sandbox container
 			let executionResult = await this.ExecuteSandboxedCode(codegenResult.data, combine, timeout);
 			
 			//Lambda to apply a set of regular expressions to the sandbox stdout (treating the output as a UTF-8 string)
