@@ -9,7 +9,7 @@ message ListCapabilitiesResponse {
 
 //Represents a regular expression match object
 message RegexMatch {
-	repeated string groups = 1;
+	repeated string groups = 1;  //The captured groups for this regular expression match object
 }
 
 //Represents the request data for the PerformAstMatch() RPC call

@@ -86,7 +86,11 @@ Runs the supplied source code with the specified input data and matches the outp
 
 #### RPC output data takes the form of the `PerformIOMatchResponse` message type, which has the structure:
 
-<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>stdout</td><td> bytes</td><td>The captured stdout data (interleaved with the captured stderr data if <code>combine</code> was true)</td></tr><tr><td>stderr</td><td> bytes</td><td>The captured stderr data (empty if <code>combine</code> was true)</td></tr><tr><td>matchesStdOut</td><td>Array of  string</td><td>The list of matches for the patterns that we applied to the stdout data</td></tr><tr><td>matchesStdErr</td><td>Array of  string</td><td>The list of matches for the patterns that we applied to the stderr data</td></tr></tbody></table>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>stdout</td><td> bytes</td><td>The captured stdout data (interleaved with the captured stderr data if <code>combine</code> was true)</td></tr><tr><td>stderr</td><td> bytes</td><td>The captured stderr data (empty if <code>combine</code> was true)</td></tr><tr><td>matchesStdOut</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stdout data</td></tr><tr><td>matchesStdErr</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stderr data</td></tr></tbody></table>
+
+The `RegexMatch` message type has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>groups</td><td>Array of  string</td><td>The captured groups for this regular expression match object</td></tr></tbody></table>
 
 <br><br>
 
