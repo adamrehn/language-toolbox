@@ -8,12 +8,16 @@
 				"invocation": "ioStuff()",
 				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
 				"combine": false,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH '''TRIPLE QUOTES",
+					"MY STDIN DATA",
+					"TRIPLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -25,12 +29,16 @@
 				"invocation": "ioStuff()",
 				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
 				"combine": true,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH '''TRIPLE QUOTES",
+					"MY STDIN DATA",
+					"TRIPLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -42,12 +50,16 @@
 				"invocation": "IOStuff.ioStuff();",
 				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
 				"combine": false,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH '''TRIPLE QUOTES",
+					"MY STDIN DATA",
+					"TRIPLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -59,12 +71,16 @@
 				"invocation": "IOStuff.ioStuff();",
 				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
 				"combine": true,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH '''TRIPLE QUOTES",
+					"MY STDIN DATA",
+					"TRIPLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -76,12 +92,16 @@
 				"invocation": "ioStuff();",
 				"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
 				"combine": false,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH '''TRIPLE QUOTES",
+					"MY STDIN DATA",
+					"TRIPLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -93,12 +113,16 @@
 				"invocation": "IOStuff.ioStuff();",
 				"stdin": "MY STDIN DATA WITH \"\"DOUBLE QUOTES\"\"",
 				"combine": false,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA).+(DOUBLE QUOTES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH \"\"DOUBLE QUOTES",
+					"MY STDIN DATA",
+					"DOUBLE QUOTES"
+				]}],
 				"matchesStdErr": []
 			}
 		},
@@ -110,12 +134,18 @@
 				"invocation": "ioStuff();",
 				"stdin": "MY STDIN DATA WITH \"\"DOUBLE QUOTES\"\" AND ${INTERPOLATION} AND\nNEWLINES",
 				"combine": false,
-				"patternsStdOut": ["MY STDIN DATA"],
+				"patternsStdOut": ["(MY STDIN DATA)[\\s\\S]+(DOUBLE QUOTES)[\\s\\S]+(INTERPOLATION)[\\s\\S]+(NEWLINES)"],
 				"patternsStdErr": []
 			},
 			"expected": {
 				"error": "",
-				"matchesStdOut": ["MY STDIN DATA"],
+				"matchesStdOut": [{"groups":[
+					"MY STDIN DATA WITH \"\"DOUBLE QUOTES\"\" AND ${INTERPOLATION} AND\nNEWLINES",
+					"MY STDIN DATA",
+					"DOUBLE QUOTES",
+					"INTERPOLATION",
+					"NEWLINES"
+				]}],
 				"matchesStdErr": []
 			}
 		}

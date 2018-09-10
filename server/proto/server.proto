@@ -7,6 +7,11 @@ message ListCapabilitiesResponse {
 	repeated LanguageCapabilities capabilities = 1;  //The list of programming languages and associated processing capabilities
 }
 
+//Represents a regular expression match object
+message RegexMatch {
+	repeated string groups = 1;
+}
+
 //Represents the request data for the PerformAstMatch() RPC call
 message PerformAstMatchRequest
 {
@@ -39,11 +44,11 @@ message PerformIOMatchRequest
 //Represents the response data for the PerformIOMatch() RPC call
 message PerformIOMatchResponse
 {
-	string error = 1;                   //Contains the error details if an error occurred, or an empty string upon success
-	bytes stdout = 2;                   //The captured stdout data (interleaved with the captured stderr data if `combine` was true)
-	bytes stderr = 3;                   //The captured stderr data (empty if `combine` was true)
-	repeated string matchesStdOut = 4;  //The list of matches for the patterns that we applied to the stdout data
-	repeated string matchesStdErr = 5;  //The list of matches for the patterns that we applied to the stderr data
+	string error = 1;                       //Contains the error details if an error occurred, or an empty string upon success
+	bytes stdout = 2;                       //The captured stdout data (interleaved with the captured stderr data if `combine` was true)
+	bytes stderr = 3;                       //The captured stderr data (empty if `combine` was true)
+	repeated RegexMatch matchesStdOut = 4;  //The list of match objects for the patterns that we applied to the stdout data
+	repeated RegexMatch matchesStdErr = 5;  //The list of match objects for the patterns that we applied to the stderr data
 }
 
 //Represents the request data for the PerformUnitTests() RPC call

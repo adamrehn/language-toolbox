@@ -255,7 +255,7 @@ export class LanguageModule extends SubprocessManagerBase
 				return patterns.map((pattern : string) =>
 				{
 					let matches = decoded.match(pattern);
-					return (matches !== null) ? matches[0] : '';
+					return {'groups': (matches !== null) ? matches : []};
 				});
 			};
 			
