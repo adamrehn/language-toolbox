@@ -1,7 +1,7 @@
 {
-	"name": "code-server-stuff",
-	"description": "Code Server Stuff",
-	"homepage": "https://github.com/adamrehn/language-toolbox/server/core",
+	"name": "language-toolbox-javascript-module",
+	"description": "Language Toolbox Javascript Module",
+	"homepage": "https://github.com/adamrehn/language-toolbox/server/languages/javascript",
 	"main": "source/js/main.js",
 	"version": "1.0.0",
 	"files": [
