@@ -12,8 +12,12 @@
 			"expected": {
 				"error": "",
 				"matches": [
-					"{\"type\":\"Name\",\"id\":\"x\",\"ctx\":{\"type\":\"Load\"},\"lineno\":3,\"col_offset\":8}",
-					"{\"type\":\"Name\",\"id\":\"print\",\"ctx\":{\"type\":\"Load\"},\"lineno\":2,\"col_offset\":1}"
+					{
+						"matches": [
+							"{\"type\":\"Name\",\"id\":\"x\",\"ctx\":{\"type\":\"Load\"},\"lineno\":3,\"col_offset\":8}",
+							"{\"type\":\"Name\",\"id\":\"print\",\"ctx\":{\"type\":\"Load\"},\"lineno\":2,\"col_offset\":1}"
+						]
+					}
 				]
 			}
 		},
@@ -29,13 +33,17 @@
 			"expected": {
 				"error": "",
 				"matches": [
-					"{\"type\":\"SimpleName\",\"identifier\":\"Passthrough\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"passthrough\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"println\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"out\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"System\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"x\"}",
-					"{\"type\":\"SimpleName\",\"identifier\":\"x\"}"
+					{
+						"matches": [
+							"{\"type\":\"SimpleName\",\"identifier\":\"Passthrough\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"passthrough\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"println\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"out\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"System\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"x\"}",
+							"{\"type\":\"SimpleName\",\"identifier\":\"x\"}"
+						]
+					}
 				]
 			}
 		},
@@ -51,11 +59,15 @@
 			"expected": {
 				"error": "",
 				"matches": [
-					"{\"type\":\"Identifier\",\"name\":\"passthrough\"}",
-					"{\"type\":\"Identifier\",\"name\":\"x\"}",
-					"{\"type\":\"Identifier\",\"name\":\"x\"}",
-					"{\"type\":\"Identifier\",\"name\":\"console\"}",
-					"{\"type\":\"Identifier\",\"name\":\"log\"}"
+					{
+						"matches": [
+							"{\"type\":\"Identifier\",\"name\":\"passthrough\"}",
+							"{\"type\":\"Identifier\",\"name\":\"x\"}",
+							"{\"type\":\"Identifier\",\"name\":\"x\"}",
+							"{\"type\":\"Identifier\",\"name\":\"console\"}",
+							"{\"type\":\"Identifier\",\"name\":\"log\"}"
+						]
+					}
 				]
 			}
 		},
@@ -71,49 +83,53 @@
 			"expected": {
 				"error": "",
 				"matches": [
-					"{\"col\":28,\"line\":15}",
-					"{\"col\":28,\"line\":15}",
-					"{\"col\":28,\"line\":15}",
-					"{\"col\":28,\"line\":15}",
-					"{\"col\":28,\"line\":474}",
-					"{\"col\":28,\"line\":447}",
-					"{\"col\":28,\"line\":1499}",
-					"{\"col\":28,\"line\":1499}",
-					"{\"col\":28,\"line\":1499}",
-					"{\"col\":28,\"line\":1499}",
-					"{\"col\":28,\"line\":1499}",
-					"{\"col\":28,\"line\":1503}",
-					"{\"col\":28,\"line\":1503}",
-					"{\"col\":28,\"line\":1503}",
-					"{\"col\":28,\"line\":1503}",
-					"{\"col\":28,\"line\":1503}",
-					"{\"col\":28,\"line\":845}",
-					"{\"col\":28,\"line\":845}",
-					"{\"col\":28,\"line\":407}",
-					"{\"col\":28,\"line\":407}",
-					"{\"col\":28,\"line\":407}",
-					"{\"col\":28,\"line\":407}",
-					"{\"col\":28,\"line\":418}",
-					"{\"col\":28,\"line\":418}",
-					"{\"col\":28,\"line\":407}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":101}",
-					"{\"col\":28,\"line\":1046}",
-					"{\"col\":28,\"line\":1044}",
-					"{\"col\":28,\"line\":1046}",
-					"{\"col\":28,\"line\":408}",
-					"{\"col\":28,\"line\":277}",
-					"{\"col\":28,\"line\":287}",
-					"{\"col\":28,\"line\":140}",
-					"{\"col\":28,\"line\":1514}",
-					"{\"col\":28,\"line\":1514}",
-					"{\"col\":28,\"line\":1514}",
-					"{\"col\":28,\"line\":1514}",
-					"{\"col\":28,\"line\":1514}"
+					{
+						"matches": [
+							"{\"col\":28,\"line\":15}",
+							"{\"col\":28,\"line\":15}",
+							"{\"col\":28,\"line\":15}",
+							"{\"col\":28,\"line\":15}",
+							"{\"col\":28,\"line\":474}",
+							"{\"col\":28,\"line\":447}",
+							"{\"col\":28,\"line\":1499}",
+							"{\"col\":28,\"line\":1499}",
+							"{\"col\":28,\"line\":1499}",
+							"{\"col\":28,\"line\":1499}",
+							"{\"col\":28,\"line\":1499}",
+							"{\"col\":28,\"line\":1503}",
+							"{\"col\":28,\"line\":1503}",
+							"{\"col\":28,\"line\":1503}",
+							"{\"col\":28,\"line\":1503}",
+							"{\"col\":28,\"line\":1503}",
+							"{\"col\":28,\"line\":845}",
+							"{\"col\":28,\"line\":845}",
+							"{\"col\":28,\"line\":407}",
+							"{\"col\":28,\"line\":407}",
+							"{\"col\":28,\"line\":407}",
+							"{\"col\":28,\"line\":407}",
+							"{\"col\":28,\"line\":418}",
+							"{\"col\":28,\"line\":418}",
+							"{\"col\":28,\"line\":407}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":101}",
+							"{\"col\":28,\"line\":1046}",
+							"{\"col\":28,\"line\":1044}",
+							"{\"col\":28,\"line\":1046}",
+							"{\"col\":28,\"line\":408}",
+							"{\"col\":28,\"line\":277}",
+							"{\"col\":28,\"line\":287}",
+							"{\"col\":28,\"line\":140}",
+							"{\"col\":28,\"line\":1514}",
+							"{\"col\":28,\"line\":1514}",
+							"{\"col\":28,\"line\":1514}",
+							"{\"col\":28,\"line\":1514}",
+							"{\"col\":28,\"line\":1514}"
+						]
+					}
 				]
 			}
 		},
@@ -129,7 +145,11 @@
 			"expected": {
 				"error": "",
 				"matches": [
-					"{\"RawKind\":8508,\"Language\":\"C#\",\"Span\":{\"Start\":32,\"End\":43,\"Length\":11,\"IsEmpty\":false},\"SpanStart\":32,\"FullSpan\":{\"Start\":32,\"End\":43,\"Length\":11,\"IsEmpty\":false},\"IsMissing\":false,\"Value\":\"passthrough\",\"ValueText\":\"passthrough\",\"Text\":\"passthrough\",\"HasLeadingTrivia\":false,\"HasTrailingTrivia\":false,\"ContainsDiagnostics\":false,\"ContainsDirectives\":false,\"HasStructuredTrivia\":false,\"ContainsAnnotations\":false,\"LeadingTrivia\":[],\"TrailingTrivia\":[],\"SyntaxTree\":{\"FilePath\":\"\",\"Encoding\":null,\"Length\":135,\"HasCompilationUnitRoot\":true,\"Options\":{\"LanguageVersion\":7,\"SpecifiedLanguageVersion\":0,\"PreprocessorSymbolNames\":[],\"Language\":\"C#\",\"Features\":{},\"Kind\":0,\"SpecifiedKind\":0,\"DocumentationMode\":1,\"Errors\":[]}}}"
+					{
+						"matches": [
+							"{\"RawKind\":8508,\"Language\":\"C#\",\"Span\":{\"Start\":32,\"End\":43,\"Length\":11,\"IsEmpty\":false},\"SpanStart\":32,\"FullSpan\":{\"Start\":32,\"End\":43,\"Length\":11,\"IsEmpty\":false},\"IsMissing\":false,\"Value\":\"passthrough\",\"ValueText\":\"passthrough\",\"Text\":\"passthrough\",\"HasLeadingTrivia\":false,\"HasTrailingTrivia\":false,\"ContainsDiagnostics\":false,\"ContainsDirectives\":false,\"HasStructuredTrivia\":false,\"ContainsAnnotations\":false,\"LeadingTrivia\":[],\"TrailingTrivia\":[],\"SyntaxTree\":{\"FilePath\":\"\",\"Encoding\":null,\"Length\":135,\"HasCompilationUnitRoot\":true,\"Options\":{\"LanguageVersion\":7,\"SpecifiedLanguageVersion\":0,\"PreprocessorSymbolNames\":[],\"Language\":\"C#\",\"Features\":{},\"Kind\":0,\"SpecifiedKind\":0,\"DocumentationMode\":1,\"Errors\":[]}}}"
+						]
+					}
 				]
 			}
 		}
