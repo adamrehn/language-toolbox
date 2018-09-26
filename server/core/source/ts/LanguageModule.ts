@@ -220,9 +220,9 @@ export class LanguageModule extends SubprocessManagerBase
 			let nodes = JSON.parse(ast.ast);
 			
 			//Apply the JSONPath patterns and retrieve the list of matches
-			let matches : string[] = [];
+			let matches : {}[] = [];
 			for (let pattern of patterns) {
-				matches = matches.concat(jp.query(nodes, pattern).map((match : any) => { return JSON.stringify(match); }));
+				matches.push({'matches': jp.query(nodes, pattern).map((match : any) => { return JSON.stringify(match); })});
 			}
 			
 			return {'error': '', 'ast': ast.ast, 'matches': matches};

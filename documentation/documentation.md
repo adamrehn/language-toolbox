@@ -72,7 +72,11 @@ Generates the Abstract Syntax Tree (in JSON format) for the supplied source code
 
 #### RPC output data takes the form of the `PerformAstMatchResponse` message type, which has the structure:
 
-<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>ast</td><td> string</td><td>The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching</td></tr><tr><td>matches</td><td>Array of  string</td><td>The list of matches for each supplied pattern, in JSON format</td></tr></tbody></table>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>ast</td><td> string</td><td>The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching</td></tr><tr><td>matches</td><td>Array of  <code>AstMatch</code></td><td>The list of matches for each supplied pattern</td></tr></tbody></table>
+
+The `AstMatch` message type has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>matches</td><td>Array of  string</td><td>The list of matches for an individual pattern, in JSON format</td></tr></tbody></table>
 
 <br><br>
 
