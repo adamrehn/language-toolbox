@@ -7,9 +7,15 @@ message ListCapabilitiesResponse {
 	repeated LanguageCapabilities capabilities = 1;  //The list of programming languages and associated processing capabilities
 }
 
-//Represents an AST match object
+//Represents an individual AST match object
 message AstMatch {
-	repeated string matches = 1;  //The list of matches for an individual pattern, in JSON format
+	string object = 1;         //The matching object, in JSON format
+	repeated string path = 2;  //The path to the matching object, as a list of path components
+}
+
+//Represents a list of AST matches for a single pattern
+message AstMatchList {
+	repeated AstMatch matches = 1;  //The list of matches for this pattern
 }
 
 //Represents a regular expression match object
@@ -28,9 +34,9 @@ message PerformAstMatchRequest
 //Represents the response data for the PerformAstMatch() RPC call
 message PerformAstMatchResponse
 {
-	string error = 1;               //Contains the error details if an error occurred, or an empty string upon success
-	string ast = 2;                 //The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching
-	repeated AstMatch matches = 3;  //The list of matches for each supplied pattern
+	string error = 1;                   //Contains the error details if an error occurred, or an empty string upon success
+	string ast = 2;                     //The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching
+	repeated AstMatchList matches = 3;  //The list of matches for each supplied pattern
 }
 
 //Represents the request data for the PerformIOMatch() RPC call

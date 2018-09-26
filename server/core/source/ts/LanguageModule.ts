@@ -221,8 +221,11 @@ export class LanguageModule extends SubprocessManagerBase
 			
 			//Apply the JSONPath patterns and retrieve the list of matches
 			let matches : {}[] = [];
-			for (let pattern of patterns) {
-				matches.push({'matches': jp.query(nodes, pattern).map((match : any) => { return JSON.stringify(match); })});
+			for (let pattern of patterns)
+			{
+				matches.push({'matches': jp.nodes(nodes, pattern).map((match : any) => {
+					return {'object': JSON.stringify(match.value), 'path': match.path.map((component : any) => `${component}`)};
+				})});
 			}
 			
 			return {'error': '', 'ast': ast.ast, 'matches': matches};
