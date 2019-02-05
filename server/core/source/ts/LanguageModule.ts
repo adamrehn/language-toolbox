@@ -276,6 +276,45 @@ export class LanguageModule extends SubprocessManagerBase
 		}
 	}
 	
+	//Performs multiple I/O matches and aggregates the results
+	public async PerformCompoundIOMatch(common : any, requests : any[])
+	{
+		try
+		{
+			//Perform each of our nested requests
+			let results : any[] = [];
+			for (let request of requests)
+			{
+				//Perform the request, using the common field values as appropriate
+				let response = await this.PerformIOMatch(
+					(request.source.length > 0) ? request.source : common.source,
+					(request.invocation.length > 0) ? request.invocation : common.invocation,
+					(request.stdin.length > 0) ? request.stdin : common.stdin,
+					(common.combine === true) ? common.combine : request.combine,
+					request.patternsStdOut,
+					request.patternsStdErr,
+					(request.timeout > 0) ? request.timeout : common.timeout
+				);
+				
+				//Propagate any errors
+				if (response['error'].length > 0) {
+					throw new Error(response['error']);
+				}
+				
+				//Add the results to our aggregated list
+				results.push(response);
+			}
+			
+			//Return the aggregated results
+			return {'error': '', 'results': results};
+		}
+		catch (err)
+		{
+			//Transmit any errors to the client
+			return {'error': err.message, 'results': []};
+		}
+	}
+	
 	//Runs unit tests
 	public async PerformUnitTests(source : string, setup : string, teardown : string, tests : any, timeout : number)
 	{

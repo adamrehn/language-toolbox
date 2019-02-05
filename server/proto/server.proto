@@ -62,6 +62,20 @@ message PerformIOMatchResponse
 	repeated RegexMatch matchesStdErr = 5;  //The list of match objects for the patterns that we applied to the stderr data
 }
 
+//Represents the request data for the PerformCompoundIOMatch() RPC call
+message PerformCompoundIOMatchRequest
+{
+	PerformIOMatchRequest common = 1;             //The common field values that will override any left blank in the individual requests
+	repeated PerformIOMatchRequest requests = 2;  //The list of PerformIOMatch requests to perform
+}
+
+//Represents the response data for the PerformCompoundIOMatch() RPC call
+message PerformCompoundIOMatchResponse
+{
+	string error = 1;                             //Contains the error details if an error occurred, or an empty string upon success
+	repeated PerformIOMatchResponse results = 2;  //The aggregated list of PerformIOMatch responses
+}
+
 //Represents the request data for the PerformUnitTests() RPC call
 message PerformUnitTestsRequest
 {
@@ -94,6 +108,9 @@ service Server
 	
 	//Runs the supplied source code with the specified input data and matches the output against the specified regular expression patterns.
 	rpc PerformIOMatch (PerformIOMatchRequest) returns (PerformIOMatchResponse) {}
+	
+	//Runs multiple PerformIOMatch requests and aggregates the results.
+	rpc PerformCompoundIOMatch (PerformCompoundIOMatchRequest) returns (PerformCompoundIOMatchResponse) {}
 	
 	//Runs the supplied unit tests against the supplied source code and returns the test results.
 	rpc PerformUnitTests (PerformUnitTestsRequest) returns (PerformUnitTestsResponse) {}

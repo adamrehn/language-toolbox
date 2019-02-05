@@ -10,11 +10,13 @@ type RpcImplementation = (m : LanguageModule, call : grpc.ServerUnaryCall<any>) 
 class RpcDetails
 {
 	public capability : number;
+	public language : (request : any) => string;
 	public implementation : RpcImplementation;
 	
-	public constructor(capability : number, implementation : RpcImplementation)
+	public constructor(capability : number, language : (request : any) => string, implementation : RpcImplementation)
 	{
 		this.capability = capability;
+		this.language = language;
 		this.implementation = implementation;
 	}
 }
@@ -61,25 +63,51 @@ export class ServerCore
 		const capabilities = this.serverProto.Capabilities;
 		const mappings = {
 			
-			'GenerateAst': new RpcDetails(capabilities.GENERATE_ASTS,
+			'GenerateAst': new RpcDetails(
+				capabilities.GENERATE_ASTS,
+				
+				(request : any) => request.language,
+				
 				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
 					return m.GenerateAst(call.request.source);
 				}
 			),
 			
-			'PerformAstMatch': new RpcDetails(capabilities.GENERATE_ASTS,
+			'PerformAstMatch': new RpcDetails(
+				capabilities.GENERATE_ASTS,
+				
+				(request : any) => request.language,
+				
 				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
 					return m.PerformAstMatch(call.request.source, call.request.patterns);
 				}
 			),
 			
-			'PerformIOMatch': new RpcDetails(capabilities.IO_MATCHING,
+			'PerformIOMatch': new RpcDetails(
+				capabilities.IO_MATCHING,
+				
+				(request : any) => request.language,
+				
 				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
 					return m.PerformIOMatch(call.request.source, call.request.invocation, call.request.stdin, call.request.combine, call.request.patternsStdOut, call.request.patternsStdErr, call.request.timeout);
 				}
 			),
 			
-			'PerformUnitTests': new RpcDetails(capabilities.UNIT_TESTING,
+			'PerformCompoundIOMatch': new RpcDetails(
+				capabilities.IO_MATCHING,
+				
+				(request : any) => request.common.language || request.requests[0].language,
+				
+				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
+					return m.PerformCompoundIOMatch(call.request.common, call.request.requests);
+				}
+			),
+			
+			'PerformUnitTests': new RpcDetails(
+				capabilities.UNIT_TESTING,
+				
+				(request : any) => request.language,
+				
 				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
 					return m.PerformUnitTests(call.request.source, call.request.setup, call.request.teardown, call.request.tests, call.request.timeout);
 				}
@@ -110,13 +138,14 @@ export class ServerCore
 		try
 		{
 			//If the requested language module does not support the requested RPC, report the error
-			if (this.isSupported(call, rpc.capability) === false) {
+			let language = rpc.language(call.request);
+			if (this.isSupported(call, language, rpc.capability) === false) {
 				this.reportUnimplemented(rpcName, call, callback);
 			}
 			else
 			{
 				//Retrieve the module and invoke the RPC
-				let module = this.modules.getModule(call.request.language);
+				let module = this.modules.getModule(language);
 				let promise = rpc.implementation(module, call);
 				let result = await promise;
 				callback(null, result);
@@ -128,11 +157,11 @@ export class ServerCore
 	}
 	
 	//Determines if the requested language module supports the requested RPC call
-	private isSupported(call : grpc.ServerUnaryCall<any>, capability : number)
+	private isSupported(call : grpc.ServerUnaryCall<any>, language : string, capability : number)
 	{
 		try
 		{
-			let module = this.modules.getModule(call.request.language);
+			let module = this.modules.getModule(language);
 			let capabilities = (<number>(module.GetCapabilities().capabilities));
 			return ((capabilities & capability) != 0);
 		}

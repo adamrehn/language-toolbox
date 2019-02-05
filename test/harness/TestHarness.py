@@ -18,13 +18,19 @@ class TestHarness:
 		- A verbose output printer callback
 		'''
 		mappings = {
-			'ListCapabilities': (self._stub.ListCapabilities, common_messages.Empty,                   VerboseOutput.ListCapabilities),
-			'GenerateAst':      (self._stub.GenerateAst,      common_messages.GenerateAstRequest,      VerboseOutput.GenerateAst),
-			'PerformAstMatch':  (self._stub.PerformAstMatch,  server_messages.PerformAstMatchRequest,  VerboseOutput.PerformAstMatch),
-			'PerformIOMatch':   (self._stub.PerformIOMatch,   server_messages.PerformIOMatchRequest,   VerboseOutput.PerformIOMatch),
-			'PerformUnitTests': (self._stub.PerformUnitTests, server_messages.PerformUnitTestsRequest, VerboseOutput.PerformUnitTests)
+			'ListCapabilities':       (self._stub.ListCapabilities,       common_messages.Empty,                         VerboseOutput.ListCapabilities),
+			'GenerateAst':            (self._stub.GenerateAst,            common_messages.GenerateAstRequest,            VerboseOutput.GenerateAst),
+			'PerformAstMatch':        (self._stub.PerformAstMatch,        server_messages.PerformAstMatchRequest,        VerboseOutput.PerformAstMatch),
+			'PerformIOMatch':         (self._stub.PerformIOMatch,         server_messages.PerformIOMatchRequest,         VerboseOutput.PerformIOMatch),
+			'PerformCompoundIOMatch': (self._stub.PerformCompoundIOMatch, server_messages.PerformCompoundIOMatchRequest, VerboseOutput.PerformCompoundIOMatch),
+			'PerformUnitTests':       (self._stub.PerformUnitTests,       server_messages.PerformUnitTestsRequest,       VerboseOutput.PerformUnitTests)
 		}
 		return mappings[rpc]
+	
+	def _stripOutput(self, result):
+		del result['stdout']
+		del result['stderr']
+		return result
 	
 	def __init__(self, port, verbose):
 		'''
@@ -75,9 +81,10 @@ class TestHarness:
 				
 				# Populate any template fields in the input message
 				inputData = testCase['input']
-				if 'source' in inputData:
-					sourceFile = os.path.join(rootDir, inputData['source'])
-					inputData['source'] = Utility.readFile(sourceFile)
+				templateTarget = inputData['common'] if 'common' in inputData else inputData
+				if 'source' in templateTarget:
+					sourceFile = os.path.join(rootDir, templateTarget['source'])
+					templateTarget['source'] = Utility.readFile(sourceFile)
 				
 				# Retrieve the expected output
 				expected = testCase['expected']
@@ -97,15 +104,20 @@ class TestHarness:
 				# Print verbose output (if enabled)
 				self.printer.verbose(verbosePrinter(outputMessage), suite, testNum, totalCases)
 				
+				# Strip out stdout and stderr values from compound I/O matching responses
+				if testCase['rpc'] == 'PerformCompoundIOMatch':
+					outputData['results'] = list([self._stripOutput(result) for result in outputData['results']])
+				
 				# Iterate over the keys that we care about for testing purposes and verify that the actual values matches the expected ones
 				result = [json.dumps(outputData[key], sort_keys=True) == json.dumps(expected[key], sort_keys=True) for key in expected]
 				failed = len([r for r in result if r == False])
 				
 				# Report the test results
+				language = testCase['input']['language'] if 'language' in testCase['input'] else ''
 				if failed > 0:
 					self.printer.failure('Failed test for RPC {} with {} code file {},\n\nOutput:\n\t{}\n\nExpected:\n\t{}'.format(
 						testCase['rpc'],
-						testCase['input']['language'],
+						language,
 						sourceFile,
 						json.dumps(outputData, sort_keys=True),
 						json.dumps(expected, sort_keys=True)
@@ -113,6 +125,6 @@ class TestHarness:
 				else:
 					self.printer.success('Passed test for RPC {} with {} code file {}'.format(
 						testCase['rpc'],
-						testCase['input']['language'],
+						language,
 						sourceFile,
 					), suite, testNum, totalCases)

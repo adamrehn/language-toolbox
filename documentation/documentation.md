@@ -7,6 +7,7 @@
     - [GenerateAst RPC](#generateast-rpc)
     - [PerformAstMatch RPC](#performastmatch-rpc)
     - [PerformIOMatch RPC](#performiomatch-rpc)
+    - [PerformCompoundIOMatch RPC](#performcompoundiomatch-rpc)
     - [PerformUnitTests RPC](#performunittests-rpc)
 - [LanguageModule Service](#languagemodule-service)
     - [GetCapabilities RPC](#getcapabilities-rpc)
@@ -72,11 +73,15 @@ Generates the Abstract Syntax Tree (in JSON format) for the supplied source code
 
 #### RPC output data takes the form of the `PerformAstMatchResponse` message type, which has the structure:
 
-<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>ast</td><td> string</td><td>The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching</td></tr><tr><td>matches</td><td>Array of  <code>AstMatch</code></td><td>The list of matches for each supplied pattern</td></tr></tbody></table>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>ast</td><td> string</td><td>The entire generated Abstract Syntax Tree, in JSON format, before applying any pattern matching</td></tr><tr><td>matches</td><td>Array of  <code>AstMatchList</code></td><td>The list of matches for each supplied pattern</td></tr></tbody></table>
+
+The `AstMatchList` message type has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>matches</td><td>Array of  <code>AstMatch</code></td><td>The list of matches for this pattern</td></tr></tbody></table>
 
 The `AstMatch` message type has the structure:
 
-<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>matches</td><td>Array of  string</td><td>The list of matches for an individual pattern, in JSON format</td></tr></tbody></table>
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>object</td><td> string</td><td>The matching object, in JSON format</td></tr><tr><td>path</td><td>Array of  string</td><td>The path to the matching object, as a list of path components</td></tr></tbody></table>
 
 <br><br>
 
@@ -89,6 +94,32 @@ Runs the supplied source code with the specified input data and matches the outp
 <table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>language</td><td> string</td><td>The name of the programming language in which the source code is written</td></tr><tr><td>source</td><td> string</td><td>The source code upon which the code in the <code>invocation</code> parameter depends</td></tr><tr><td>invocation</td><td> string</td><td>The source code to be executed and whose output will be captured</td></tr><tr><td>stdin</td><td> string</td><td>The string (including any newlines) to be used as the stdin data</td></tr><tr><td>combine</td><td> bool</td><td>Whether the stdout and stderr streams should be combined</td></tr><tr><td>patternsStdOut</td><td>Array of  string</td><td>The list of regular expression patterns to match against the stdout data</td></tr><tr><td>patternsStdErr</td><td>Array of  string</td><td>The list of regular expression patterns to match against the stderr data</td></tr><tr><td>timeout</td><td> uint32</td><td>Execution time limit (leave blank to use default timeout)</td></tr></tbody></table>
 
 #### RPC output data takes the form of the `PerformIOMatchResponse` message type, which has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>stdout</td><td> bytes</td><td>The captured stdout data (interleaved with the captured stderr data if <code>combine</code> was true)</td></tr><tr><td>stderr</td><td> bytes</td><td>The captured stderr data (empty if <code>combine</code> was true)</td></tr><tr><td>matchesStdOut</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stdout data</td></tr><tr><td>matchesStdErr</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stderr data</td></tr></tbody></table>
+
+The `RegexMatch` message type has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>groups</td><td>Array of  string</td><td>The captured groups for this regular expression match object</td></tr></tbody></table>
+
+<br><br>
+
+### PerformCompoundIOMatch RPC
+
+Runs multiple PerformIOMatch requests and aggregates the results.
+
+#### RPC input data takes the form of the `PerformCompoundIOMatchRequest` message type, which has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>common</td><td> <code>PerformIOMatchRequest</code></td><td>The common field values that will override any left blank in the individual requests</td></tr><tr><td>requests</td><td>Array of  <code>PerformIOMatchRequest</code></td><td>The list of PerformIOMatch requests to perform</td></tr></tbody></table>
+
+The `PerformIOMatchRequest` message type has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>language</td><td> string</td><td>The name of the programming language in which the source code is written</td></tr><tr><td>source</td><td> string</td><td>The source code upon which the code in the <code>invocation</code> parameter depends</td></tr><tr><td>invocation</td><td> string</td><td>The source code to be executed and whose output will be captured</td></tr><tr><td>stdin</td><td> string</td><td>The string (including any newlines) to be used as the stdin data</td></tr><tr><td>combine</td><td> bool</td><td>Whether the stdout and stderr streams should be combined</td></tr><tr><td>patternsStdOut</td><td>Array of  string</td><td>The list of regular expression patterns to match against the stdout data</td></tr><tr><td>patternsStdErr</td><td>Array of  string</td><td>The list of regular expression patterns to match against the stderr data</td></tr><tr><td>timeout</td><td> uint32</td><td>Execution time limit (leave blank to use default timeout)</td></tr></tbody></table>
+
+#### RPC output data takes the form of the `PerformCompoundIOMatchResponse` message type, which has the structure:
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>results</td><td>Array of  <code>PerformIOMatchResponse</code></td><td>The aggregated list of PerformIOMatch responses</td></tr></tbody></table>
+
+The `PerformIOMatchResponse` message type has the structure:
 
 <table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>error</td><td> string</td><td>Contains the error details if an error occurred, or an empty string upon success</td></tr><tr><td>stdout</td><td> bytes</td><td>The captured stdout data (interleaved with the captured stderr data if <code>combine</code> was true)</td></tr><tr><td>stderr</td><td> bytes</td><td>The captured stderr data (empty if <code>combine</code> was true)</td></tr><tr><td>matchesStdOut</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stdout data</td></tr><tr><td>matchesStdErr</td><td>Array of  <code>RegexMatch</code></td><td>The list of match objects for the patterns that we applied to the stderr data</td></tr></tbody></table>
 

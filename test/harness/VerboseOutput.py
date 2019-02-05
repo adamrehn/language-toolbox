@@ -78,6 +78,18 @@ class VerboseOutput:
 		return buf.getvalue().strip()
 	
 	@staticmethod
+	def PerformCompoundIOMatch(response):
+		'''
+		Verbose output printer for PerformCompoundIOMatch() RPC results
+		'''
+		buf = io.StringIO()
+		with redirect_stdout(buf):
+			print('Perform compound I/O Matching results:')
+			print('\tError: {}'.format(response.error))
+			print('\tResults:\n')
+		return buf.getvalue() + '\n'.join([VerboseOutput.PerformIOMatch(result) for result in response.results])
+	
+	@staticmethod
 	def PerformUnitTests(response):
 		'''
 		Verbose output printer for PerformUnitTests() RPC results

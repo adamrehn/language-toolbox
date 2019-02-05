@@ -148,6 +148,42 @@
 				]}],
 				"matchesStdErr": []
 			}
+		},
+		{
+			"rpc": "PerformCompoundIOMatch",
+			"input": {
+				"common": {
+					"language": "python",
+					"source": "code/io_stuff.py",
+					"invocation": "ioStuff()",
+					"combine": false
+				},
+				"requests": [
+					{
+						"stdin": "MY STDIN DATA WITH '''TRIPLE QUOTES'''",
+						"patternsStdOut": ["(MY STDIN DATA).+(TRIPLE QUOTES)"],
+						"patternsStdErr": []
+					},
+					{
+						"stdin": "MY STDIN DATA WITH \"DOUBLE QUOTES\"",
+						"patternsStdOut": ["(MY STDIN DATA).+(DOUBLE QUOTES)"],
+						"patternsStdErr": []
+					},
+					{
+						"stdin": "MY STDIN DATA WITH NO QUOTES",
+						"patternsStdOut": ["(MY STDIN DATA).+(NO QUOTES)"],
+						"patternsStdErr": []
+					}
+				]
+			},
+			"expected": {
+				"error": "",
+				"results": [
+					{"error": "", "matchesStdErr": [], "matchesStdOut": [{"groups": ["MY STDIN DATA WITH '''TRIPLE QUOTES", "MY STDIN DATA", "TRIPLE QUOTES"]}]},
+					{"error": "", "matchesStdErr": [], "matchesStdOut": [{"groups": ["MY STDIN DATA WITH \"DOUBLE QUOTES", "MY STDIN DATA", "DOUBLE QUOTES"]}]},
+					{"error": "", "matchesStdErr": [], "matchesStdOut": [{"groups": ["MY STDIN DATA WITH NO QUOTES", "MY STDIN DATA", "NO QUOTES"]}]}
+				]
+			}
 		}
 	]
 }
