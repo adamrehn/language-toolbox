@@ -291,8 +291,8 @@ export class LanguageModule extends SubprocessManagerBase
 					(request.invocation.length > 0) ? request.invocation : common.invocation,
 					(request.stdin.length > 0) ? request.stdin : common.stdin,
 					(common.combine === true) ? common.combine : request.combine,
-					request.patternsStdOut,
-					request.patternsStdErr,
+					(request.patternsStdOut.length > 0) ? request.patternsStdOut : common.patternsStdOut,
+					(request.patternsStdErr.length > 0) ? request.patternsStdErr : common.patternsStdErr,
 					(request.timeout > 0) ? request.timeout : common.timeout
 				);
 				
