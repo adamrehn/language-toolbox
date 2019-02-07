@@ -89,7 +89,7 @@ export class ServerCore
 				(request : any) => request.language,
 				
 				(m : LanguageModule, call : grpc.ServerUnaryCall<any>) => {
-					return m.PerformIOMatch(call.request.source, call.request.invocation, call.request.stdin, call.request.combine, call.request.patternsStdOut, call.request.patternsStdErr, call.request.timeout);
+					return m.PerformIOMatch(call.request.source, call.request.invocation, call.request.stdin, call.request.combine, call.request.patternsStdOut, call.request.patternsStdErr, call.request.customTokens, call.request.timeout);
 				}
 			),
 			

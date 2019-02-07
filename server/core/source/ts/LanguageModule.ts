@@ -238,7 +238,7 @@ export class LanguageModule extends SubprocessManagerBase
 	}
 	
 	//Performs regex-based I/O matching
-	public async PerformIOMatch(source : string, invocation : string, stdin : string, combine : boolean, patternsStdOut : string[], patternsStdErr : string[], timeout : number)
+	public async PerformIOMatch(source : string, invocation : string, stdin : string, combine : boolean, patternsStdOut : string[], patternsStdErr : string[], customTokens : boolean, timeout : number)
 	{
 		try
 		{
@@ -261,6 +261,13 @@ export class LanguageModule extends SubprocessManagerBase
 					return {'groups': (matches !== null) ? matches : []};
 				});
 			};
+			
+			//If custom token expansion is enabled, expand any tokens in our regular expressions
+			if (customTokens === true)
+			{
+				patternsStdOut = Utility.expandRegexes(patternsStdOut);
+				patternsStdErr = Utility.expandRegexes(patternsStdErr);
+			}
 			
 			//Apply our regular expressions to the sandbox stdout and stderr
 			let matchesStdOut = applyPatterns(executionResult.stdout, patternsStdOut);
@@ -293,6 +300,7 @@ export class LanguageModule extends SubprocessManagerBase
 					(common.combine === true) ? common.combine : request.combine,
 					(request.patternsStdOut.length > 0) ? request.patternsStdOut : common.patternsStdOut,
 					(request.patternsStdErr.length > 0) ? request.patternsStdErr : common.patternsStdErr,
+					(common.customTokens === true) ? common.customTokens : request.customTokens,
 					(request.timeout > 0) ? request.timeout : common.timeout
 				);
 				
