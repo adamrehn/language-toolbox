@@ -1,3 +1,4 @@
+import { DockerSandbox, SandboxOutput } from './DockerSandbox';
 import { LanguageModule } from './LanguageModule';
 import { ModuleManager } from './ModuleManager';
 import { PortAllocator } from './PortAllocator';
@@ -120,8 +121,11 @@ export class ServerCore
 	//Returns the RPC service implementations mapping for gRPC
 	public getRpcImplementations() : {[name : string]: grpc.handleCall<any,any>}
 	{
-		//Create the mapping for ListCapabilities, which is always supported
-		let implementations : {[name : string]: grpc.handleCall<any,any>} = {'ListCapabilities': this.ListCapabilities.bind(this)};
+		//Create the mappings for ListCapabilities and InvokeCustomSandbox, which are always supported
+		let implementations : {[name : string]: grpc.handleCall<any,any>} = {
+			'ListCapabilities': this.ListCapabilities.bind(this),
+			'InvokeCustomSandbox': this.InvokeCustomSandbox.bind(this)
+		};
 		
 		//Add the mappings for each of the remaining RPCs, ensuring they are called via verifyAndInvoke()
 		let mappings = this.getRpcMappings();
@@ -200,5 +204,31 @@ export class ServerCore
 		
 		//Return the list to the client
 		callback(null, capabilities);
+	}
+	
+	//InvokeCustomSandbox() RPC implementation
+	public InvokeCustomSandbox(call : grpc.ServerUnaryCall<any>, callback : grpc.sendUnaryData<any>)
+	{
+		//Attempt to execute the supplied code in the custom sandbox image
+		let sandbox = new DockerSandbox();
+		let promise = sandbox.run(
+			{'image': call.request.image, 'command': call.request.command},
+			call.request.stdin,
+			call.request.combine,
+			call.request.timeout
+		);
+		
+		//Return the result to the client
+		promise.then((output : SandboxOutput) =>
+		{
+			callback(null, {
+				'error': '',
+				'stdout': output.stdout,
+				'stderr': output.stderr
+			});
+		})
+		.catch((err : Error) => {
+			callback(null, {'error': err.message});
+		});
 	}
 }

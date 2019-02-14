@@ -1,0 +1,18 @@
+{
+	"cases": [
+		{
+			"rpc": "InvokeCustomSandbox",
+			"input": {
+				"image": "ubuntu:18.04",
+				"command": ["cat"],
+				"stdin": "SGVsbG8gV29ybGQh",
+				"combine": false,
+				"timeout": 0
+			},
+			"expected": {
+				"error": "",
+				"stdout": "SGVsbG8gV29ybGQh"
+			}
+		}
+	]
+}

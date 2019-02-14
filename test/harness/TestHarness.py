@@ -23,7 +23,8 @@ class TestHarness:
 			'PerformAstMatch':        (self._stub.PerformAstMatch,        server_messages.PerformAstMatchRequest,        VerboseOutput.PerformAstMatch),
 			'PerformIOMatch':         (self._stub.PerformIOMatch,         server_messages.PerformIOMatchRequest,         VerboseOutput.PerformIOMatch),
 			'PerformCompoundIOMatch': (self._stub.PerformCompoundIOMatch, server_messages.PerformCompoundIOMatchRequest, VerboseOutput.PerformCompoundIOMatch),
-			'PerformUnitTests':       (self._stub.PerformUnitTests,       server_messages.PerformUnitTestsRequest,       VerboseOutput.PerformUnitTests)
+			'PerformUnitTests':       (self._stub.PerformUnitTests,       server_messages.PerformUnitTestsRequest,       VerboseOutput.PerformUnitTests),
+			'InvokeCustomSandbox':    (self._stub.InvokeCustomSandbox,    server_messages.InvokeCustomSandboxRequest,    VerboseOutput.InvokeCustomSandbox)
 		}
 		return mappings[rpc]
 	
@@ -80,6 +81,7 @@ class TestHarness:
 				stub, messageType, verbosePrinter = self._getRpcDetails(testCase['rpc'])
 				
 				# Populate any template fields in the input message
+				sourceFile = None
 				inputData = testCase['input']
 				templateTarget = inputData['common'] if 'common' in inputData else inputData
 				if 'source' in templateTarget:

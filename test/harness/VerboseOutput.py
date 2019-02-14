@@ -104,3 +104,16 @@ class VerboseOutput:
 			for vec in response.results:
 				print('\t\t[{}]'.format(','.join(list([VerboseOutput._stringifyTestCaseResult(result) for result in vec.result]))))
 		return buf.getvalue().strip()
+	
+	@staticmethod
+	def InvokeCustomSandbox(response):
+		'''
+		Verbose output printer for InvokeCustomSandbox() RPC results
+		'''
+		buf = io.StringIO()
+		with redirect_stdout(buf):
+			print('Invoke custom sandbox results:')
+			print('\tError: {}'.format(response.error))
+			print('\tstdout: {}'.format(response.stdout))
+			print('\tstderr: {}'.format(response.stderr))
+		return buf.getvalue().strip()

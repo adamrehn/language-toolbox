@@ -95,6 +95,24 @@ message PerformUnitTestsResponse
 	repeated UnitTestResultVector results = 4;  //The list of results for each unit test
 }
 
+//Represents the request data for the InvokeCustomSandbox() RPC call
+message InvokeCustomSandboxRequest
+{
+	string image = 1;             //The name of the Docker image to be used for sandboxed execution
+	repeated string command = 2;  //The command to be run inside the sandbox container instance
+	bytes stdin = 3;              //The binary stdin data to pass to the executed command
+	bool combine = 4;             //Whether the stdout and stderr streams should be combined
+	uint32 timeout = 5;           //Execution time limit (leave blank to use default timeout)
+}
+
+//Represents the response data for the InvokeCustomSandbox() RPC call
+message InvokeCustomSandboxResponse
+{
+	string error = 1;  //Contains the error details if an error occurred, or an empty string upon success
+	bytes stdout = 2;  //The captured stdout data (interleaved with the captured stderr data if `combine` was true)
+	bytes stderr = 3;  //The captured stderr data (empty if `combine` was true)
+}
+
 //This is the public interface exposed by the Language Toolbox server for use by client applications.
 service Server
 {
@@ -115,4 +133,7 @@ service Server
 	
 	//Runs the supplied unit tests against the supplied source code and returns the test results.
 	rpc PerformUnitTests (PerformUnitTestsRequest) returns (PerformUnitTestsResponse) {}
+	
+	//Invokes a custom sandbox with an arbitrary command and stdin data and returns the output. (Advanced use only)
+	rpc InvokeCustomSandbox (InvokeCustomSandboxRequest) returns (InvokeCustomSandboxResponse) {}
 }
