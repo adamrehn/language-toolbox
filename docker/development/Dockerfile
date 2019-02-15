@@ -7,6 +7,9 @@ RUN rm -R /opt/toolbox
 COPY ./docker/production/build/*.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
 
+# Create a non-root user for running our language module subprocesses
+RUN useradd --home /tmp --shell /bin/bash --uid 1000 module
+
 WORKDIR /opt/toolbox/server
 ENTRYPOINT ["bash"]
 EXPOSE 50051

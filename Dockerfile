@@ -17,13 +17,16 @@ COPY . /opt/toolbox
 # If we are building from a git repo (as opposed to a source tarball),
 # clean any existing build files so we can perform a clean build
 WORKDIR /opt/toolbox
-RUN test -d ./.git && git clean --force -x; exit 0
+RUN test -d ./.git && git clean --force -x -d; exit 0
 
 # Build the server core and each of the language modules from source
 RUN /tmp/build/build-all.sh
 
 # Remove the dependency scripts and build scripts from the image
 RUN rm -R /tmp/deps /tmp/build
+
+# Create a non-root user for running our language module subprocesses
+RUN useradd --home /tmp --shell /bin/bash --uid 1000 module
 
 WORKDIR /opt/toolbox/server/core
 ENTRYPOINT ["node", "."]

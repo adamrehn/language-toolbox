@@ -1,3 +1,5 @@
 FROM ubuntu:18.04
 
-# No need to install anything
+# Create a non-root user for running sandboxed code
+RUN useradd --home /tmp --shell /bin/bash --uid 1000 sandbox
+USER sandbox

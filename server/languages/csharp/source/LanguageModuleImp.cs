@@ -24,7 +24,7 @@ namespace language_csharp
 		{
 			return Task.FromResult(new SandboxDetails {
 				Image = "adamrehn/language-toolbox-sandbox-csharp",
-				Command = {"bash", "-c", "cat > /tmp/temp.zip && unzip -qq -d /tmp /tmp/temp.zip && dotnet /tmp/CodegenOutput.dll"}
+				Command = {"bash", "-c", "cat > /tmp/temp.zip && unzip -qq -d /tmp /tmp/temp.zip && chmod -R 777 *.* && dotnet /tmp/CodegenOutput.dll"}
 			});
 		}
 		

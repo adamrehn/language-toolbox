@@ -79,8 +79,11 @@ export class LanguageModule extends SubprocessManagerBase
 			let baseCommand = <string>(commandFilled.shift());
 			let args = commandFilled;
 			
-			//Spawn the child process
-			this.process = spawn(baseCommand, args, {cwd: this.workingDir});
+			//Set the HOME environment variable to the appropriate value for our non-root user since `spawn` doesn't do this for us
+			process.env['HOME'] = '/tmp'
+			
+			//Spawn the child process as our non-root user
+			this.process = spawn(baseCommand, args, {cwd: this.workingDir, uid: 1000, gid: 1000});
 			
 			//Emit an error if the child process could not be started
 			this.process.once('error', (err : Error) => {

@@ -60,7 +60,6 @@ export class DockerSandbox extends SubprocessManagerBase
 				`--memory-swap=${MEMORY_LIMIT}m`,
 				'--memory-swappiness=0',
 				'--ulimit', `cpu=${sandboxTimeout}`,
-				'--ulimit', 'nproc=1',
 				'--read-only',
 				'--tmpfs', '/tmp:rw,nosuid,nodev,exec',
 				'-w', '/tmp',
