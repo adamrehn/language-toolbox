@@ -100,6 +100,9 @@ class VerboseOutput:
 			print('\tError: {}'.format(response.error))
 			print('\tPassed: {}'.format(response.passed))
 			print('\tFailed: {}'.format(response.failed))
+			print('\tPass/fail vectors:')
+			for vec in response.results:
+				print('\t\t[{}]'.format(','.join([str(passed) for passed in vec.passed])))
 			print('\tResult vectors:')
 			for vec in response.results:
 				print('\t\t[{}]'.format(','.join(list([VerboseOutput._stringifyTestCaseResult(result) for result in vec.result]))))

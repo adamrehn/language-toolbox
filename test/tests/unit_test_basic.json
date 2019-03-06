@@ -42,12 +42,15 @@
 			},
 			"expected": {
 				"passed": 4,
-				"results": [{"result": [
-					{ "output": "1", "type": "int", "exception": false },
-					{ "output": "2", "type": "int", "exception": false },
-					{ "output": "3", "type": "int", "exception": false },
-					{ "output": "4", "type": "int", "exception": false }
-				]}],
+				"results": [{
+					"passed": [true, true, true, true],
+					"result": [
+						{ "output": "1", "type": "int", "exception": false },
+						{ "output": "2", "type": "int", "exception": false },
+						{ "output": "3", "type": "int", "exception": false },
+						{ "output": "4", "type": "int", "exception": false }
+					]
+				}],
 				"error": "",
 				"failed": 0
 			}
@@ -94,12 +97,15 @@
 			},
 			"expected": {
 				"passed": 4,
-				"results": [{"result": [
-					{ "output": "1", "type": "java.lang.Integer", "exception": false },
-					{ "output": "2", "type": "java.lang.Integer", "exception": false },
-					{ "output": "3", "type": "java.lang.Integer", "exception": false },
-					{ "output": "4", "type": "java.lang.Integer", "exception": false }
-				]}],
+				"results": [{
+					"passed": [true, true, true, true],
+					"result": [
+						{ "output": "1", "type": "java.lang.Integer", "exception": false },
+						{ "output": "2", "type": "java.lang.Integer", "exception": false },
+						{ "output": "3", "type": "java.lang.Integer", "exception": false },
+						{ "output": "4", "type": "java.lang.Integer", "exception": false }
+					]
+				}],
 				"error": "",
 				"failed": 0
 			}
@@ -146,12 +152,15 @@
 			},
 			"expected": {
 				"passed": 4,
-				"results": [{"result": [
-					{ "output": "1", "type": "Number", "exception": false },
-					{ "output": "2", "type": "Number", "exception": false },
-					{ "output": "3", "type": "Number", "exception": false },
-					{ "output": "4", "type": "Number", "exception": false }
-				]}],
+				"results": [{
+					"passed": [true, true, true, true],
+					"result": [
+						{ "output": "1", "type": "Number", "exception": false },
+						{ "output": "2", "type": "Number", "exception": false },
+						{ "output": "3", "type": "Number", "exception": false },
+						{ "output": "4", "type": "Number", "exception": false }
+					]
+				}],
 				"error": "",
 				"failed": 0
 			}
@@ -198,12 +207,15 @@
 			},
 			"expected": {
 				"passed": 4,
-				"results": [{"result": [
-					{ "output": "1", "type": "int", "exception": false },
-					{ "output": "2", "type": "int", "exception": false },
-					{ "output": "3", "type": "int", "exception": false },
-					{ "output": "4", "type": "int", "exception": false }
-				]}],
+				"results": [{
+					"passed": [true, true, true, true],
+					"result": [
+						{ "output": "1", "type": "int", "exception": false },
+						{ "output": "2", "type": "int", "exception": false },
+						{ "output": "3", "type": "int", "exception": false },
+						{ "output": "4", "type": "int", "exception": false }
+					]
+				}],
 				"error": "",
 				"failed": 0
 			}
@@ -250,12 +262,15 @@
 			},
 			"expected": {
 				"passed": 4,
-				"results": [{"result": [
-					{ "output": "1", "type": "Int32", "exception": false },
-					{ "output": "2", "type": "Int32", "exception": false },
-					{ "output": "3", "type": "Int32", "exception": false },
-					{ "output": "4", "type": "Int32", "exception": false }
-				]}],
+				"results": [{
+					"passed": [true, true, true, true],
+					"result": [
+						{ "output": "1", "type": "Int32", "exception": false },
+						{ "output": "2", "type": "Int32", "exception": false },
+						{ "output": "3", "type": "Int32", "exception": false },
+						{ "output": "4", "type": "Int32", "exception": false }
+					]
+				}],
 				"error": "",
 				"failed": 0
 			}

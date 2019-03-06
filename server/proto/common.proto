@@ -49,6 +49,7 @@ message UnitTest
 //Represents the result vector for a unit test
 message UnitTestResultVector {
 	repeated TestCaseResult result = 1;  //The list of test case results
+	repeated bool passed = 2;            //Flags indicating whether each test case passed or failed
 }
 
 //Represents the request data for the GenerateAst() RPC call

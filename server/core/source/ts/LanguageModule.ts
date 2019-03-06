@@ -346,26 +346,29 @@ export class LanguageModule extends SubprocessManagerBase
 				let output = `{"error": "", "passed": 0, "failed": 0, "results": ${executionResult.stdout.toString()}}`;
 				let results : any[] = Array.from(serverProto.PerformUnitTestsResponse.decodeJSON(output).results);
 				
+				//Populate the "passed" field for each test case of each unit test
+				for (let [index, test] of tests.entries())
+				{
+					let expected = Array.from(test.cases).map((testCase : any) => { return Utility.sortedJson(testCase.expected); });
+					let actual = Array.from(results[index].result).map((testResult : any) => { return Utility.sortedJson(testResult); });
+					results[index].passed = expected.map((expect : any, index : number) => { return expect == actual[index]; });
+				}
+				
 				//Determine the total number of test cases we have across all of the specified tests
 				let arraySum = (prev : any, curr : any) => { return prev + curr; };
 				let casesPerTest : any[] = tests.map((test : any) => { return Array.from(test.cases).length; });
 				let totalCases = casesPerTest.reduce(arraySum);
 				
 				//Determine how many test cases passed for each unit test
-				let passedPerTest = tests.map((test : any, index : number) =>
-				{
-					let expected = Array.from(test.cases).map((testCase : any) => { return Utility.sortedJson(testCase.expected); });
-					let actual = Array.from(results[index].result).map((testResult : any) => { return Utility.sortedJson(testResult); });
-					let passed = expected.filter((expect : any, index : number) => { return expect == actual[index]; });
-					return passed.length;
+				let passedPerTest = tests.map((test : any, index : number) => {
+					return (results[index].passed.filter((passed : boolean) => passed)).length;
 				});
 				
 				//Determine the total number of passed and failed test cases
 				let totalPassed = passedPerTest.reduce(arraySum);
 				let totalFailed = totalCases - totalPassed;
 				
-				//Construct a fresh PerformUnitTestsResponse object with our result data,
-				//since evidently the output of decodeJSON() causes serialisation issues
+				//Construct a fresh PerformUnitTestsResponse object with our populated result data
 				return {'error': '', 'passed': totalPassed, 'failed': totalFailed, 'results': results};
 			}
 			catch (err) {
