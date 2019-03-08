@@ -74,7 +74,8 @@ message PerformCompoundIOMatchRequest
 message PerformCompoundIOMatchResponse
 {
 	string error = 1;                             //Contains the error details if an error occurred, or an empty string upon success
-	repeated PerformIOMatchResponse results = 2;  //The aggregated list of PerformIOMatch responses
+	PerformIOMatchRequest request = 2;            //Contains the specific request that triggered an error if one occurred, or an empty request upon success
+	repeated PerformIOMatchResponse results = 3;  //The aggregated list of PerformIOMatch responses
 }
 
 //Represents the request data for the PerformUnitTests() RPC call

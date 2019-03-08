@@ -309,7 +309,7 @@ export class LanguageModule extends SubprocessManagerBase
 				
 				//Propagate any errors
 				if (response['error'].length > 0) {
-					throw new Error(response['error']);
+					return {'error': response['error'], 'request': request, 'results': []};
 				}
 				
 				//Add the results to our aggregated list
@@ -322,6 +322,7 @@ export class LanguageModule extends SubprocessManagerBase
 		catch (err)
 		{
 			//Transmit any errors to the client
+			//(Note that we should only ever reach this line if something went wrong internally)
 			return {'error': err.message, 'results': []};
 		}
 	}
